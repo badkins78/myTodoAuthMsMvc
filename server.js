@@ -3,7 +3,7 @@ const app = express()
 const mongoose = require('mongoose')
 const passport = require('passport')
 const session = require('express-session')
-const MongoStore = require('connect-mongo')
+const MongoDBStore = require('connect-mongodb-session')(session)
 const connectDB = require('./config/database')
 const authRoutes = require('./routes/auth')
 const homeRoutes = require('./routes/home')
@@ -11,7 +11,7 @@ const todoRoutes = require('./routes/todos')
 
 require('dotenv').config({path: './config/.env'})
 
-// Passport config
+
 require('./config/passport')(passport)
 
 connectDB()
@@ -26,11 +26,8 @@ app.use(
   session({
     secret: 'keyboard cat',
     resave: false,
-    store: MongoStore.create({
-      mongoUrl: process.env.DB_STRING,
-      dbName: 'MVCTODOMSAUTH',
-      stringify: false,
-    }),
+    saveUninitialized: false,
+    store: new MongoDBStore({mongooseConnection: mongoose.connection})
   })
 )
 

@@ -1,15 +1,17 @@
 exports.creds = {
-  clientID:
-    "1018870726313-opakrms4g289kgqiirr73n8ca9hp0fmn.apps.googleusercontent.com",
+  identityMetadata: 'https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration',
 
-  clientSecret: "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",
+  clientID: 'ee372626-5658-4428-acf0-d5c48c4b969e',
 
-  redirectUrl: [
-    "https://mytodooauth20mvc.herokuapp.com/auth/google/callback",
-    "http://localhost:2121",
-  ],
+  clientSecret: 'd5b01ac5-fa48-4d34-a4f5-1a71368122ce',
 
-  projectID: "mvctodomsauth",
+  responseType: 'code id_token',
+
+  responseMode: 'form_post',
+
+  redirectUrl: 'http://localhost:2121/auth/openid/return',
+
+  allowHttpForRedirectUrl: true,
 
   validateIssuer: false,
 
@@ -19,7 +21,12 @@ exports.creds = {
 
   useCookieInsteadOfSession: false,
 
-  scope: "profile",
+  cookieEncryptionKeys: [
+    { 'key': '12345678901234567890123456789012', 'iv': '123456789012' },
+    { 'key': 'abcdefghijklmnopqrstuvwxyzabcdef', 'iv': 'abcdefghijkl' }
+  ],
+
+  scope: ['profile', 'offline_access', 'https://graph.microsoft.com/mail.read'],
 
   loggingLevel: false,
 
@@ -28,20 +35,12 @@ exports.creds = {
   nonceMaxAmount: 5,
 
   clockSkew: null,
-
-  authUri: "https://accounts.google.com/o/oauth2/auth",
-
-  tokenUri: "https://oauth2.googleapis.com/token",
-
-  auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
-
-  javascript_origins: ["https://mytodooauth20mvc.herokuapp.com"],
 };
 
-exports.destroySessionUrl = "http://localhost:2121";
+exports.destroySessionUrl = 'http://localhost:2121';
 
 exports.useMongoDBSessionStore = false;
 
-exports.databaseUri = "mongodb://localhost/OIDCStrategy";
+exports.databaseUri = 'mongodb://localhost/OIDCStrategy';
 
 exports.mongoDBSessionMaxAge = 24 * 60 * 60;
