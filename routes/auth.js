@@ -5,14 +5,14 @@ const router = express.Router()
 router.get('/google', passport.authenticate('google', {scope: ['profile']}
 ))
 
-router.get('/google/callback', passport.authenticate('google', {
+router.get('auth/google/callback', passport.authenticate('google', {
   failureRedirect:'/'}), (req,res) => {
     res.redirect('/todos')
 })
 
 router.post('/openid/return',
   function(req, res, next) {
-    passport.authenticate('google/callback',
+    passport.authenticate('auth/google/callback',
       {
         response: res,
         failureRedirect: '/'
